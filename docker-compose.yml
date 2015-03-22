@@ -5,7 +5,7 @@ builder:
     - lib/:/usr/src/app/lib
     - src/:/usr/src/app/src:ro
     - test/:/usr/src/app/test:ro
-  command: ./node_modules/.bin/grunt build
+  command: true
   environment:
     NODE_ENV: development
     SLACK_TOKEN: abc123
