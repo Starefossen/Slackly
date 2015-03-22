@@ -1,0 +1,28 @@
+builder:
+  build: .
+  volumes:
+    - Gruntfile.coffee:/usr/src/app/Gruntfile.coffee:ro
+    - lib/:/usr/src/app/lib
+    - src/:/usr/src/app/src:ro
+    - test/:/usr/src/app/test:ro
+  command: ./node_modules/.bin/grunt build
+  environment:
+    NODE_ENV: development
+    SLACK_TOKEN: abc123
+    SPRINTLY_PROJECT:
+    SPRINTLY_USER:
+    SPRINTLY_KEY:
+
+www:
+  restart: always
+  image: starefossen/Slackly
+  #build: .
+  ports:
+    - "8080"
+  environment:
+    NODE_ENV:
+    SLACK_TOKEN:
+    SPRINTLY_PROJECT:
+    SPRINTLY_USER:
+    SPRINTLY_KEY:
+
