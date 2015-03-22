@@ -9,7 +9,7 @@ Interface for Sprint.ly through Slack slash commands
 
 ![docker-badge](http://dockeri.co/image/starefossen/slackly)
 
-## Tags
+## Docker Image Tags
 
 * `starefossen/slackly:latest` latest version from master
 * `starefossen/slackly:1` latest 1.x release
