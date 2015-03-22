@@ -7,8 +7,8 @@ EXPOSE 8080
 CMD [ "npm", "start" ]
 
 COPY package.json /usr/src/app/
-RUN npm install && npm install coffee-script
+RUN npm install
 
 COPY . /usr/src/app
-RUN ./node_modules/.bin/coffee -c -b -o lib/ src/
+RUN ./node_modules/.bin/grunt build
 
