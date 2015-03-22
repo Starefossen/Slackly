@@ -15,8 +15,7 @@ builder:
 
 www:
   restart: always
-  image: starefossen/Slackly
-  #build: .
+  image: starefossen/slackly:latest
   ports:
     - "8080"
   environment:
