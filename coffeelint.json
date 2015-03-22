@@ -1,0 +1,37 @@
+{
+  "arrow_spacing": {
+    "level": "error"
+  },
+
+  "no_empty_param_list": {
+    "level" : "error"
+  },
+
+  "no_unnecessary_double_quotes": {
+    "level" : "error"
+  },
+
+  "prefer_english_operator": {
+    "level" : "error"
+  },
+
+  "max_line_length": {
+    "level" : "warn",
+    "value": 100
+  },
+
+  "cyclomatic_complexity": {
+    "level" : "warn",
+    "value" : 11
+  },
+
+  "line_endings": {
+    "value" : "unix",
+    "level" : "error"
+  },
+
+  "space_operators": {
+    "level" : "error"
+  }
+}
+
