@@ -1,0 +1,54 @@
+{
+  "name": "Slackly",
+  "version": "1.0.0",
+  "description": "Interface for Sprint.ly through Slack slash commands",
+  "dependencies": {
+    "hapi": "^8.4.0",
+    "hapi-auth-bearer-token": "^3.1.1",
+    "request": "^2.53.0",
+    "supervisor": "^0.6.0"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.9.1",
+    "coffeelint": "^1.9.2",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-coffeelint": "0.0.13",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha-test": "^0.12.7"
+  },
+  "directories": {
+    "lib": "lib",
+    "src": "src",
+    "test": "test"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/supervisor lib/server.js",
+    "test": "grunt test",
+    "build": "grunt build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Turistforeningen/Slackly.git"
+  },
+  "keywords": [
+    "Hiking",
+    "Trekking",
+    "Turbase",
+    "Gruppe"
+  ],
+  "author": "Hans Kristian Flaatten <hans.kristian.flaatten@turistforeningen.no>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Turistforeningen/Slackly/issues"
+  },
+  "homepage": "https://github.com/Turistforeningen/Slackly",
+  "config": {
+    "SLACK_TOKEN": null,
+    "SPRINTLY_PROJECT": null,
+    "SPRINTLY_USER": null,
+    "SPRINTLY_KEY": null
+  }
+}
