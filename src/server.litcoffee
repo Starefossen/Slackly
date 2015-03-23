@@ -1,4 +1,5 @@
     Hapi = require 'hapi'
+    slack = require './lib/slack'
 
     server = new Hapi.Server()
     server.connection port: 8080, address: '0.0.0.0'
@@ -11,11 +12,14 @@
           return cb null, true, token: token if token is process.env.SLACK_TOKEN
           return cb null, false, token: token
 
-    server.register [
-      register: require './api'
-      options: route: prefix: '/api'
-    ], (err) ->
-      throw err if err
+    server.route
+      method: 'GET'
+      path: '/'
+      config: auth: 'simple'
+      handler: (request, reply) ->
+        slack.parse request.query.text, (err, response) ->
+          # @TODO check error?
+          reply response
 
     if not module.parent
       server.start ->
