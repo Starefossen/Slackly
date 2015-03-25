@@ -1,21 +1,23 @@
     request = require 'request'
 
-    USER = process.env.SPRINTLY_USER
-    KEY  = process.env.SPRINTLY_KEY
-    URL  = "https://#{USER}:#{KEY}@sprint.ly/api"
+    STATUSES = ['someday', 'backlog', 'in-progress', 'completed', 'accepted']
 
-    DEFAULT_PROJECT_ID = process.env.SPRINTLY_PROJECT
+    url = (user) ->
+      "https://#{user.email}:#{user.key}@sprint.ly/api"
 
-    exports.getItem = (id, cb) ->
-      if typeof id is 'string' and id.split(':').length is 2
-        [projectId, itemNumber] = id.split ':'
-      else
-        itemNumber = id
-        projectId = DEFAULT_PROJECT_ID
-
+    exports.getItemsForUser = (user, productId, status, cb) ->
       opts =
         json: true
-        uri: "#{URL}/products/#{projectId}/items/#{itemNumber}.json"
+        uri: "#{url user}/products/#{productId}/items.json"
+        qs: assigned_to: user.id, status: status
+
+      request opts, (e, r, body) ->
+        return cb e, r.statusCode, body
+
+    exports.getItem = (user, productId, itemNumber, cb) ->
+      opts =
+        json: true
+        uri: "#{url user}/products/#{productId}/items/#{itemNumber}.json"
 
       request opts, (e, r, body) ->
         return cb e, r.statusCode, body

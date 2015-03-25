@@ -1,4 +1,6 @@
     Hapi = require 'hapi'
+
+    user  = require './lib/user'
     slack = require './lib/slack'
 
     server = new Hapi.Server()
@@ -12,14 +14,20 @@
           return cb null, true, token: token if token is process.env.SLACK_TOKEN
           return cb null, false, token: token
 
+    server.ext 'onRequest', (request, reply) ->
+      user.get request.query.user_name, (e, user) ->
+        return reply e if e
+
+        request.user = user or request.query.user_name
+        return reply.continue()
+
     server.route
       method: 'GET'
       path: '/'
       config: auth: 'simple'
       handler: (request, reply) ->
-        slack.parse request.query.text, (err, response) ->
-          # @TODO check error?
-          reply response
+        slack.parse request.user, request.query.text, (err, response) ->
+          reply err, response
 
     if not module.parent
       server.start ->
