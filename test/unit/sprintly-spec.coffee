@@ -6,20 +6,15 @@ user =
   email: process.env.SPRINTLY_USER
   key: process.env.SPRINTLY_KEY
 
-describe.only 'Items', ->
+describe 'Items', ->
   describe '#getItemsForUser', ->
     it 'should return items for user', (done) ->
       @timeout 10000
 
-      productId = process.env.SPRINTLY_PRODUCT
       status = 'in-progress'
-
-      sprintly.getItemsForUser user, productId, status, (e, status, items) ->
+      sprintly.getItemsForUser user, status, (e, items) ->
         assert.ifError e
-
-        assert.equal status, 200
-        assert items instanceof Array
-
+        assert.deepEqual Object.keys(item), ['product', 'items'] for item in items
         done()
 
   describe '#getItem', ->

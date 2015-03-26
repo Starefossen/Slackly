@@ -19,14 +19,15 @@
         when '', 'list'
           productId = process.env.SPRINTLY_PRODUCT
           status = 'in-progress'
-          sprintly.getItemsForUser u, productId, status, (e, s, items) ->
+          sprintly.getItemsForUser u, status, (e, products) ->
             return cb e if e
-            return cb null, 'Everything is done! :D' if items.length is 0
 
             res = []
-            for item in items
-              res.push "[#{item.type}] #{item.title}"
+            for p in products
+              for i in p.items
+                res.push "#{i.product.name} ##{i.number} [#{i.type}] #{i.title}"
 
+            return cb null, 'Everything is done! :D' if res.length is 0
             return cb null, res.join '\n'
 
         else

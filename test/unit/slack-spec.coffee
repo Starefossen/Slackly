@@ -49,10 +49,9 @@ describe 'Slack', ->
 
     describe 'list', ->
       it 'returns message for no items', (done) ->
-        sprintly.getItemsForUser = (user, p, s, cb) ->
-          assert.equal p, process.env.SPRINTLY_PRODUCT
+        sprintly.getItemsForUser = (user, s, cb) ->
           assert.equal s, 'in-progress'
-          cb null, 200, []
+          cb null, []
 
         slack.parse u, '', (e, result) ->
           assert.ifError e
@@ -60,20 +59,39 @@ describe 'Slack', ->
           done()
 
       it 'returns items in-progress for user', (done) ->
-        sprintly.getItemsForUser = (user, p, s, cb) ->
-          assert.equal p, process.env.SPRINTLY_PRODUCT
+        sprintly.getItemsForUser = (user, s, cb) ->
           assert.equal s, 'in-progress'
-          cb null, 200, [
-            type: 'task'
-            title: 'foo 1'
+          cb null, [
+            product: {}
+            items: [
+              number: 1
+              type: 'task'
+              title: 'Item 1'
+              product: name: 'Product A'
+            ,
+              number: 2
+              type: 'story'
+              title: 'Item 2'
+              product: name: 'Product A'
+            ]
           ,
-            type: 'defect'
-            title: 'bar 2'
+            product: {}
+            items: [
+              number: 3
+              type: 'defect'
+              title: 'Item 3'
+              product: name: 'Product B'
+            ]
           ]
 
         slack.parse u, '', (e, result) ->
           assert.ifError e
-          assert.equal result, '[task] foo 1\n[defect] bar 2'
+          assert.equal result, [
+            'Product A #1 [task] Item 1'
+            'Product A #2 [story] Item 2'
+            'Product B #3 [defect] Item 3'
+          ].join '\n'
+
           done()
 
     describe 'item', ->
